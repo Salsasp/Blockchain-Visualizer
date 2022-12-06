@@ -20,6 +20,7 @@ import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Rectangle;
+import java.awt.geom.Ellipse2D;
 
 public class Page1 {
 	private JPanel panel;
@@ -35,7 +36,7 @@ public class Page1 {
 		JPanel panel = page.panel;
 		MyComponent chart = page.new MyComponent();
 		layered.add(chart);
-		chart.setBounds(150, 100, 750, 750);
+		chart.setBounds(0, 100, 1000, 750);
 		layered.add(panel);
 		panel.setBounds(250, 10, 500, 200);
 		frame.setVisible(true);
@@ -71,7 +72,7 @@ public class Page1 {
 		//initializing second slider
 		JSlider s2 = new JSlider(Blocks.getBlocks().get(0).getNumber(), 
 				Blocks.getBlocks().get(Blocks.getBlocks().size()-1).getNumber());
-		s2.setValue(Blocks.getBlocks().get(0).getNumber());
+		s2.setValue(Blocks.getBlocks().get(99).getNumber());
 		s2.setMajorTickSpacing(25);
 		s2.setMinorTickSpacing(5);
 		s2.setPaintTicks(true);
@@ -88,7 +89,7 @@ public class Page1 {
 		      public void stateChanged(ChangeEvent event) {
 		        int value = s1.getValue();
 		        s2.setMinimum(value);
-		        s2.setValue(value);
+		        s2.setValue(Blocks.getBlocks().get(99).getNumber());
 		        s2labels.remove(previousKey);
 		        s2labels.put(value, new JLabel(Integer.toString(value)));
 		        s2.setLabelTable(s2labels);
@@ -110,12 +111,24 @@ public class Page1 {
 	int green = generator.nextInt(255);
 	int blue = generator.nextInt(255);
 	ArrayList<Color> colors = new ArrayList<Color>();
+	ArrayList<String> minersList = new ArrayList<String>();
+	
 	 
 	MyComponent() {}
 	
 	public void paint(Graphics g) 
 	{
-	      initializePieChart((Graphics2D) g, new Rectangle(750,750));
+	      initializePieChart((Graphics2D) g, new Rectangle(700,700));
+	      int counter = 0;
+	      int height = 50;
+	      for(String miner : minersList)
+			{
+	    	  g.setColor(colors.get(counter));
+		      g.fillOval(5, height, 20, 20);
+		      g.drawChars(minersList.get(counter).toCharArray(), 0, minersList.get(counter).length(), 5, height);
+		      height += 40;
+		      counter++;
+			}
 	}
 	
 	public void initializePieChart(Graphics2D g, Rectangle area)
@@ -133,7 +146,7 @@ public class Page1 {
 			startAngle = (int) (curValue * 360 / total);
 			int arcAngle = (int) (slices[i].value * 360 / total);
 			g.setColor(slices[i].color);
-			g.fillArc(area.x, area.y, area.width, area.height, startAngle, arcAngle);
+			g.fillArc(275, area.y, area.width, area.height, startAngle, arcAngle);
 			curValue += slices[i].value;
 		}
 		
@@ -142,14 +155,14 @@ public class Page1 {
 	{
 		randomizeColors();
 		HashMap<Blocks, Integer> miners = Blocks.calUniqMiners();
-		HashMap<String, Color> minerColor = new HashMap<String, Color>();
+		
 		Slice[] slices = new Slice[miners.size()];
 		int counter = 0;
 		for(Map.Entry<Blocks, Integer> entry : miners.entrySet())
 		{
 			Color randomColor = colors.get(counter);
 			slices[counter] = new Slice(entry.getValue(), randomColor);
-			minerColor.put(entry.getKey().getMiner(), randomColor);
+			minersList.add(entry.getKey().getMiner());
 			counter++;
 		}
 		return slices;
@@ -165,6 +178,7 @@ public class Page1 {
 			colors.add(new Color(red, green, blue));
 		}
 	}
+	
 }
 	
 
