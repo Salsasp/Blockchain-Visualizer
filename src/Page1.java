@@ -26,6 +26,8 @@ public class Page1 {
 	private JPanel panel;
 	private int previousKey = 0;
 	private Random generator = new Random();
+	public static int s1value;
+	public static int s2value;
 	
 	public static void main (String[] args) throws FileNotFoundException
 	{
@@ -58,6 +60,7 @@ public class Page1 {
 		JSlider s1 = new JSlider(Blocks.getBlocks().get(0).getNumber(), 
 				Blocks.getBlocks().get(Blocks.getBlocks().size()-1).getNumber());
         s1.setValue(Blocks.getBlocks().get(0).getNumber());
+        s1value = Blocks.getBlocks().get(0).getNumber();
 		s1.setMajorTickSpacing(25);
 		s1.setMinorTickSpacing(5);
 		s1.setPaintTicks(true);
@@ -73,6 +76,7 @@ public class Page1 {
 		JSlider s2 = new JSlider(Blocks.getBlocks().get(0).getNumber(), 
 				Blocks.getBlocks().get(Blocks.getBlocks().size()-1).getNumber());
 		s2.setValue(Blocks.getBlocks().get(99).getNumber());
+		s2value = Blocks.getBlocks().get(99).getNumber();
 		s2.setMajorTickSpacing(25);
 		s2.setMinorTickSpacing(5);
 		s2.setPaintTicks(true);
@@ -84,10 +88,11 @@ public class Page1 {
 		s2.setLabelTable(s2labels);
 		s2.setPaintLabels(true);
 		
-		//listener to dynamically change minimum value of 2nd slider to current value of 1st slider
+		//listener to dynamically change minimum range
 		s1.addChangeListener(new ChangeListener() {
 		      public void stateChanged(ChangeEvent event) {
 		        int value = s1.getValue();
+		        s1value = s1.getValue();
 		        s2.setMinimum(value);
 		        s2.setValue(Blocks.getBlocks().get(99).getNumber());
 		        s2labels.remove(previousKey);
@@ -96,6 +101,16 @@ public class Page1 {
 		        if(value != Blocks.getBlocks().get(99).getNumber())previousKey = value;
 		      }
 		    });
+		//listener to dynamically change maximum range
+		s2.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent event) {
+				int value = s2.getValue();
+				s2value = s2.getValue();
+				
+			}
+		}
+				);
+		
 		panel.add(s1);
 		panel.add(s2);
 	}
@@ -112,6 +127,7 @@ public class Page1 {
 	int blue = generator.nextInt(255);
 	ArrayList<Color> colors = new ArrayList<Color>();
 	ArrayList<String> minersList = new ArrayList<String>();
+	HashMap<Blocks, Integer> miners = Blocks.calUniqMiners();
 	
 	 
 	MyComponent() {}
@@ -154,11 +170,26 @@ public class Page1 {
 	public Slice[] getSlices()
 	{
 		randomizeColors();
-		HashMap<Blocks, Integer> miners = Blocks.calUniqMiners();
+		HashMap<Blocks, Integer> minersCopy = new HashMap<Blocks, Integer>();
+		minersCopy.putAll(miners);
 		
-		Slice[] slices = new Slice[miners.size()];
+		for(Map.Entry<Blocks, Integer> entry1 : miners.entrySet())
+		{
+			if(entry1.getKey().getNumber() < Page1.s1value)
+			{
+				minersCopy.remove(entry1.getKey());
+				repaint();
+			}
+			if(entry1.getKey().getNumber() > Page1.s2value)
+			{
+				minersCopy.remove(entry1.getKey());
+				repaint();
+			}
+		}
+		
+		Slice[] slices = new Slice[minersCopy.size()];
 		int counter = 0;
-		for(Map.Entry<Blocks, Integer> entry : miners.entrySet())
+		for(Map.Entry<Blocks, Integer> entry : minersCopy.entrySet())
 		{
 			Color randomColor = colors.get(counter);
 			slices[counter] = new Slice(entry.getValue(), randomColor);
@@ -179,10 +210,15 @@ public class Page1 {
 		}
 	}
 	
+	public HashMap<Blocks, Integer> getMinersMap()
+	{
+		return miners;
+	}
+	
 }
 	
 
- 
+ //TODO: change pie chart visuals according to sliders
 	
  
 	public class Slice
