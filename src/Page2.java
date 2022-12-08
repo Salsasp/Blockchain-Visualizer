@@ -36,7 +36,7 @@ public class Page2 extends JFrame{
 	
 	public Page2() throws FileNotFoundException
 	{
-		super("Ethereum Transaction Data");
+		super("Dakota Gee");
 		Blocks.readFile("ethereumP1data.txt");
 		panel = createChartPanel();
 		add(panel, BorderLayout.CENTER);

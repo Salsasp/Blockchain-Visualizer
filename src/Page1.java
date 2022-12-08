@@ -22,8 +22,9 @@ import java.awt.GridBagLayout;
 import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
 
-public class Page1 {
+public class Page1 extends JPanel{
 	private JPanel panel;
+	private JPanel masterPanel;
 	private int previousKey = 0;
 	private Random generator = new Random();
 	public static int s1value;
@@ -31,7 +32,7 @@ public class Page1 {
 	
 	public static void main (String[] args) throws FileNotFoundException
 	{
-		JFrame frame = new JFrame();
+		JFrame frame = new JFrame("Dakota Gee");
 		JLayeredPane layered = new JLayeredPane();
 		frame.setContentPane(layered);
 		Page1 page = new Page1();
@@ -44,14 +45,13 @@ public class Page1 {
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1000,1000);
-
 	}
 
 	public Page1() throws FileNotFoundException
 	{
 		Blocks.readFile("ethereumP1data.txt");
 		initializeSliders();
-		
+
 	}
 	public void initializeSliders()
 	{

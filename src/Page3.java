@@ -46,7 +46,7 @@ public class Page3 extends JFrame{
 	
 	public Page3() throws FileNotFoundException
 	{
-		super("Time Difference Between Blocks");
+		super("Dakota Gee");
 		Blocks.readFile("ethereumP1data.txt");
 		panel = new JPanel();
 		JFreeChart barChart = ChartFactory.createBarChart("Time Difference Between Blocks", "Blocks", "Time Units (hrs, mins, secs)", createDataset(), PlotOrientation.VERTICAL
