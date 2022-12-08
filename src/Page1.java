@@ -114,12 +114,7 @@ public class Page1 {
 		panel.add(s1);
 		panel.add(s2);
 	}
-	
-	
-	
-	
-	
-	
+
  class MyComponent extends JComponent
 {
 	int red = generator.nextInt(255); 
@@ -216,11 +211,7 @@ public class Page1 {
 	}
 	
 }
-	
 
- //TODO: change pie chart visuals according to sliders
-	
- 
 	public class Slice
 	{
 		int value;

@@ -239,12 +239,13 @@ public class Blocks implements Comparable<Blocks>{
 	 * @param first: a Blocks object
 	 * @param second: a Blocks object
 	 */
-	public static void timeDiff(Blocks first, Blocks second)
+	public static long[] timeDiff(Blocks first, Blocks second)
 	{
 		long secDiff;
 		long hours;
 		long minutes;
 		long seconds;
+		long[] toReturn = new long[3];
 		try {
 		if(first.getTimestamp() > second.getTimestamp())
 		{
@@ -266,10 +267,12 @@ public class Blocks implements Comparable<Blocks>{
 		String secondsString = " seconds.";
 		if(seconds == 1)secondsString = " second.";
 		
-		System.out.println("The difference in time between Block " + first.getNumber() + " and Block " + second.getNumber()
-				 + " is " + hours + hoursString + minutes + minutesString + "and " + seconds + secondsString);
+		toReturn[0] = hours;
+		toReturn[1] = minutes;
+		toReturn[2] = seconds;
 		}
 		catch(NullPointerException e) {System.out.println("A given Block is null.");}
+		return toReturn;
 	}
 	
 	/**
