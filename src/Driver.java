@@ -7,11 +7,9 @@ import javax.swing.JPanel;
 public class Driver {
 
 	public static void main(String[] args) throws FileNotFoundException {
-		//Blocks.readFile("ethereumP1data.csv");
-		//Blocks.sortBlocksByNumber();
-		
-		
-
+		Blocks.readFile("ethereumP1data.txt");
+		Blocks.sortBlocksByNumber();
+		System.out.println(Blocks.getBlocks().toString());
 	}
 
 }

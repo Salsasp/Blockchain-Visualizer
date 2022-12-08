@@ -146,7 +146,6 @@ public class Blocks implements Comparable<Blocks>{
 			}
 			dupeCount = 1;
 		}
-		//for loop to output to console
 		for(int i = 0; i < dupeBlocks.size(); i++)
 		{
 			miners.put(dupeBlocks.get(i), numDupes.get(i));
@@ -239,13 +238,13 @@ public class Blocks implements Comparable<Blocks>{
 	 * @param first: a Blocks object
 	 * @param second: a Blocks object
 	 */
-	public static long[] timeDiff(Blocks first, Blocks second)
+	public static double[] timeDiff(Blocks first, Blocks second)
 	{
-		long secDiff;
-		long hours;
-		long minutes;
-		long seconds;
-		long[] toReturn = new long[3];
+		double secDiff;
+		double hours;
+		double minutes;
+		double seconds;
+		double[] toReturn = new double[3];
 		try {
 		if(first.getTimestamp() > second.getTimestamp())
 		{
@@ -260,12 +259,14 @@ public class Blocks implements Comparable<Blocks>{
 		minutes = (secDiff%3600)/60;
 		seconds = ((secDiff%3600)%60);
 		
+		/*
 		String hoursString = " hours, ";
 		if(hours == 1)hoursString = " hour, ";
 		String minutesString = " minutes, ";
 		if(minutes == 1)minutesString = " minute, ";
 		String secondsString = " seconds.";
 		if(seconds == 1)secondsString = " second.";
+		*/
 		
 		toReturn[0] = hours;
 		toReturn[1] = minutes;
