@@ -37,7 +37,7 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection; 
 
-public class Page3 extends JFrame{
+public class Page3 extends JPanel{
 	int lowerBound = 15049308; //lowest block number in blocks list
 	int upperBound = 15049407; //highest block number in blocks list
 	Set<CategoryDataset> datasets;
@@ -46,8 +46,8 @@ public class Page3 extends JFrame{
 	
 	public Page3() throws FileNotFoundException
 	{
-		super("Dakota Gee");
-		Blocks.readFile("ethereumP1data.txt");
+		super();
+		//Blocks.readFile("ethereumP1data.txt");
 		panel = new JPanel();
 		JFreeChart barChart = ChartFactory.createBarChart("Time Difference Between Blocks", "Blocks", "Time Units (hrs, mins, secs)", createDataset(), PlotOrientation.VERTICAL
 				, true, true, false);
@@ -55,7 +55,6 @@ public class Page3 extends JFrame{
 		add(panel, BorderLayout.EAST);
 		add(initializeBoxes(),BorderLayout.WEST);
 		setVisible(true);
-		pack();
 		
 	}
 	private CategoryDataset createDataset()
@@ -102,6 +101,6 @@ public class Page3 extends JFrame{
 	}
 	public static void main(String[] args) throws FileNotFoundException
 	{
-		Page3 page = new Page3();
+
 	}
 }

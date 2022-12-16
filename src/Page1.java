@@ -14,17 +14,20 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.ComponentOrientation;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.LayoutManager;
 import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
 
 public class Page1 extends JPanel{
-	private JPanel panel;
-	private JPanel masterPanel;
 	private int previousKey = 0;
 	private Random generator = new Random();
 	public static int s1value;
@@ -32,30 +35,25 @@ public class Page1 extends JPanel{
 	
 	public static void main (String[] args) throws FileNotFoundException
 	{
-		JFrame frame = new JFrame("Dakota Gee");
-		JLayeredPane layered = new JLayeredPane();
-		frame.setContentPane(layered);
-		Page1 page = new Page1();
-		JPanel panel = page.panel;
-		MyComponent chart = page.new MyComponent();
-		layered.add(chart);
-		chart.setBounds(0, 100, 1000, 750);
-		layered.add(panel);
-		panel.setBounds(250, 10, 500, 200);
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1000,1000);
+
 	}
 
 	public Page1() throws FileNotFoundException
 	{
-		Blocks.readFile("ethereumP1data.txt");
-		initializeSliders();
-
+		super();
+		GridBagLayout layout = new GridBagLayout();
+		GridBagConstraints gbc = new GridBagConstraints();
+		//Blocks.readFile("ethereumP1data.txt");
+		JSlider[] sliders = initializeSliders();
+		MyComponent chart = new MyComponent();
+		add(sliders[0], BorderLayout.NORTH);
+		add(sliders[1], BorderLayout.NORTH);
+		add(chart, BorderLayout.NORTH);
+		setVisible(true);
+		setSize(1000,1000);
 	}
-	public void initializeSliders()
+	public JSlider[] initializeSliders()
 	{
-		panel = new JPanel();
 		//initializing first slider
 		JSlider s1 = new JSlider(Blocks.getBlocks().get(0).getNumber(), 
 				Blocks.getBlocks().get(Blocks.getBlocks().size()-1).getNumber());
@@ -110,9 +108,10 @@ public class Page1 extends JPanel{
 			}
 		}
 				);
-		
-		panel.add(s1);
-		panel.add(s2);
+		JSlider[] sliders = new JSlider[2];
+		sliders[0] = s1;
+		sliders[1] = s2;
+		return sliders;
 	}
 
  class MyComponent extends JComponent
@@ -125,7 +124,11 @@ public class Page1 extends JPanel{
 	HashMap<Blocks, Integer> miners = Blocks.calUniqMiners();
 	
 	 
-	MyComponent() {}
+	MyComponent() 
+	{
+		setVisible(true); 
+		setPreferredSize(new Dimension(1000,800));
+	}
 	
 	public void paint(Graphics g) 
 	{

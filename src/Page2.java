@@ -28,7 +28,7 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;  
 
-public class Page2 extends JFrame{
+public class Page2 extends JPanel{
 	boolean box1checked = false;
 	boolean box2checked = false;
 	boolean box3checked = false;
@@ -36,16 +36,14 @@ public class Page2 extends JFrame{
 	
 	public Page2() throws FileNotFoundException
 	{
-		super("Dakota Gee");
-		Blocks.readFile("ethereumP1data.txt");
+		super();
+		//Blocks.readFile("ethereumP1data.txt");
 		panel = createChartPanel();
 		add(panel, BorderLayout.CENTER);
 		add(this.initializeCheckboxes(), BorderLayout.SOUTH);
 		setSize(1000,1000);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
 	}
-	private JPanel createChartPanel() throws FileNotFoundException
+	private ChartPanel createChartPanel() throws FileNotFoundException
 	{
 		String chartTitle = "Ethereum Transaction Data";
 		String xAxisLabel = "Blocks";
@@ -118,7 +116,7 @@ public class Page2 extends JFrame{
 		box1.addItemListener(new ItemListener() {
 		      public void itemStateChanged(ItemEvent event) {
 		        if(event.getStateChange() == 1)Page2.this.box1checked = true;
-		        else Page2.this.box2checked = false;
+		        else Page2.this.box1checked = false;
 		        Page2.this.remove(Page2.this.panel);
 		        try {
 		        	Page2.this.panel = Page2.this.createChartPanel();
@@ -172,7 +170,6 @@ public class Page2 extends JFrame{
 	{
 		XYPlot plot = chart.getXYPlot();
 		XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-		
 		//set colors
 		renderer.setSeriesPaint(0, Color.magenta);
 		renderer.setSeriesPaint(1, Color.blue);
@@ -193,6 +190,6 @@ public class Page2 extends JFrame{
 	
 	public static void main(String[] args) throws FileNotFoundException
 	{
-		new Page2().setVisible(true);
+
 	}
 }
