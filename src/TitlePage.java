@@ -35,6 +35,10 @@ public class TitlePage extends JFrame{;
 		page3 = new Page3();
 		initializeComboBox();
 		add(layered);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		this.setUndecorated(true);
+		this.setVisible(true);
+		
 		
 	}
 	public void initializeComboBox()
@@ -86,8 +90,9 @@ public class TitlePage extends JFrame{;
 		    	  }
 		      }
 		    });
-		layered.add(comboBox);
 		comboBox.setBounds(500, 10, 400, 20);
+		layered.add(comboBox);
+		comboBox.setVisible(true);
 		
 	}
 	
